@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.name }}</title>
+</head>
+<body>
+<section>
+    <div>
+        <div>
+            <h3>
+                {{ object.name }}
+                <a>{{ object.description }}</a>
+            </h3>
+            <hr />
+            <div>
+                <h5>
+                    ${{ object.price }}
+                    <form action="{% url 'buy' object.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" id="checkout-button">Buy</button>
+                    </form>
+                </h5>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script type="text/javascript">
+    {% for products in product %}
+    var stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+    var buyButton = document.getElementById('buy-button');
+    buyButton.addEventListener('click', function() {
+        fetch('{% url 'buy' products.id %}',
+            {method: 'GET'})
+            .then(function (response) {
+          return response.json();
+        })
+            .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+      });
+        {% endfor %}
+</script>
+</html>

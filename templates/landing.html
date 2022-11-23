@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy something</title>
+    <link rel="stylesheet" href="">
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+<section>
+
+    <div class="product">
+    {% for products in product %}
+        <div class="description">
+            <h3>
+                <a href="{{ products.get_absolute_url }}">{{ products.name }}</a>
+            </h3>
+            <hr />
+
+            <div>
+                <h5>${{ products.price }}</h5>
+                <form action="{% url 'buy' products.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="checkout-button">Buy</button>
+                </form>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+</section>
+
+</body>
+<script type="text/javascript">
+    {% for products in product %}
+    var stripe = Stripe('{{ STRIPE_PUBLIC_KEY }}');
+    var buyButton = document.getElementById('buy-button');
+    buyButton.addEventListener('click', function() {
+        fetch('{% url 'buy' products.id %}',
+            {method: 'GET'})
+            .then(function (response) {
+          return response.json();
+        })
+            .then(function (session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+      });
+        {% endfor %}
+</script>
+</html>
