@@ -33,9 +33,6 @@ TEMPLATES = [
 
 Создаем model in models.py, и запускаем makemigration и migrate:
 
-from django.db import models
-
-from django.urls import reverse
 class Item(models.Model):
     name = models.CharField(max_length=100) # Название продукта
     description = models.CharField(max_length=400) # Описание продукта 
