@@ -7,6 +7,7 @@ One-page site for stripe API. Stripe - payment system.
 Используем виртуальное окружение и устанавливаем django и stripe. 
 
 pip install django==3.2.10
+
 pip install stripe
 
 Первоначальные настройки и команды:
