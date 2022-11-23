@@ -58,7 +58,7 @@ class ArticleDetailView(DetailView):
     model = Item
     template_name = 'detail.html'
 
-    def get_price(self):
+    def get_product(self):
         product = Item.objects.all()
         context = super(ArticleDetailView,
                         self).get_context_data()
