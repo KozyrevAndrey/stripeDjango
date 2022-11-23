@@ -18,12 +18,13 @@ pip install stripe
 3. py manage.py createsuperuser
 4. Создаем папку templates в корневой папке проекта;
 5. Добавляем в settings:
-TEMPLATES = [
-    {
-        'DIRS': [BASE_DIR / 'templates'],
-        ...
-    },
-]
+
+    TEMPLATES = [
+        {
+            'DIRS': [BASE_DIR / 'templates'],
+            ...
+        },
+    ]
 
 Для продолжения работы и налаживания связи с stripe API необходимо зарегистрироваться. 
 Регистрируемся, получаем stripe_public_key и stripe_secret_key. Создаем продукты, которые будут работать с stripe API. 
@@ -55,8 +56,8 @@ TEMPLATES = [
  Необходимо внести в settings данные ключей stripe. 
  Вносим:
 
- STRIPE_PUBLIC_KEY = "pk_test_1234"
- STRIPE_SECRET_KEY = "sk_test_1234"
+     STRIPE_PUBLIC_KEY = "pk_test_1234"
+     STRIPE_SECRET_KEY = "sk_test_1234"
  
  Следущим шагом будет создание stripe.checkout.Session.create. 
  Создаем класс для checkoutsession. Он будет использоваться при переходе на оплату.
@@ -121,13 +122,14 @@ TEMPLATES = [
 
 
 Сейчас прописываем все urls. 
-urlpatterns = [
-    path('cancel/', CancelView.as_view(), name='cancel'),
-    path('success/', SuccessView.as_view(), name='success'),
-    path('buy/<pk>/', CreateCheckoutSession.as_view(), name='buy'),
-    path('', ProductLandingPageView.as_view(), name='landing'),
-    path('item/<pk>/', ArticleDetailView.as_view(), name='detail')
-]
+
+    urlpatterns = [
+        path('cancel/', CancelView.as_view(), name='cancel'),
+        path('success/', SuccessView.as_view(), name='success'),
+        path('buy/<pk>/', CreateCheckoutSession.as_view(), name='buy'),
+        path('', ProductLandingPageView.as_view(), name='landing'),
+        path('item/<pk>/', ArticleDetailView.as_view(), name='detail')
+    ]
 
 
 Можно тестировать и проверять в работе!
